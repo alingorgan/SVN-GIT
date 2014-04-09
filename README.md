@@ -63,6 +63,9 @@ git svn clone ${SVN_URL} ${SVN_CHECKOUT_DIR}
 # copy the latest SVN data into the git clone directory 
 echo "Copying new data into ${GIT_CHECKOUT_DIR}"
 cd ${SVN_CHECKOUT_DIR}
+
+# copying this way will prevent the copy of hidden .git directories or .gitignore. 
+# so every checkout preserves it's reference to it's own origin.
 cp -rf * ../${GIT_CHECKOUT_DIR}
 
 # check for any changes and commit
