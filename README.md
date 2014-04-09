@@ -1,7 +1,20 @@
 SVN-GIT
 =======
 
-A script for pulling data from an SVN repo and pushing it to a git repo.
+## What's this?
+
+This is a bash script which saves you the trouble of merging to git from SVN.
+This script was written to be used either in the OSX terminal or with OSX Server and XCode for Continuous Integration purposes.
+
+## It's purpose
+
+Long story short, OSX Server doesn't play well with pure SVN repos, and if neither SVN over ssh or merging to git are feasible options, then you're just have to do it the hard way.
+
+There are some tools out there, which help you keep SVN and Git in sync. But if you really want to control the process and make a one way only communication, from SVN to Git, then you'll have to come up with your own script to do that. Or just use mine, at least as a reference point.
+
+## Use it within you CI process or GIT merge
+
+These script can also be used as a pre/post script action for various xcode phases(build, test, archive) of a scheme which an XCode bot runs on. A bit confusing, right? In other words, to be used in the process of automating builds within the CI process, with the help of OSX Server, XCode and bots.
 ```bash
 #
 # This script is used to pull data from the SVN and push it to git
@@ -62,7 +75,10 @@ git status
 rm -f ${GIT_CHECKOUT_DIR}/.git/index.lock
 
 echo "Committing and pushing changes to the local git repo’s master"
+# look also for newly added files
 git add -A
+
+# commit changes to the master branch
 git commit -a -m "Updated from SVN"
 git push ${LOCAL_GIT_URL} master
 
@@ -71,4 +87,7 @@ echo "Removing temporary data"
 cd ..
 rm -rf ${GIT_CHECKOUT_DIR}
 rm -rf ${SVN_CHECKOUT_DIR}
+```
+
+
 
